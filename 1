@@ -30,8 +30,8 @@ services:
       -refreshTimeInSeconds 10 \
       -srcKafkaZkPath 10.132.0.210:2181/cluster1 \
       -zookeeper 10.132.0.210:2181 \
-      -destKafkaZkPath 10.132.0.210:2181/cluster1 \
-      -helixClusterName testMirrorMaker \
+      -destKafkaZkPath 10.132.0.198:2181/cluster1 \
+      -helixClusterName testMirrorMaker \ 
       -graphiteHost graphite \
       -graphitePort 2003"
     depends_on:
@@ -43,29 +43,24 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-    volumes:
-        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller
   worker_1:
     image: ureplicator_controller
     command:  "worker \
         --consumer.config example/example-consumer.properties \
         --producer.config example/example-producer.properties \
-        --helix.config example/example-helix.properties "
+        --helix.config example/example-helix.properties \
+        --topic.mappings example/example-topicmapping.properties"
     depends_on:
     - controller
     links:
     - controller
-    volumes:
-        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
   worker_2:
     image: ureplicator_controller
     command: "worker \
         --consumer.config example/example-consumer.properties \
         --producer.config example/example-producer.properties \
-        --helix.config example/example-helix-2.properties "
-    volumes:
-        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
-        - /opt/uReplicator/uReplicator-Distribution/script:/usr/src/app/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin   
+        --helix.config example/example-helix-2.properties \
+        --topic.mappings example/example-topicmapping.properties"
     depends_on:
     - controller
     links:

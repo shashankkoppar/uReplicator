@@ -110,7 +110,7 @@ public class TestManagerTopicManagement extends RestTestBase {
           conf.setDestinationClusters("cluster3");
           conf.setEnvironment("sjc1.sjc1a");
           conf.setHelixClusterName("testMirrorMaker");
-          conf.addProperty("kafka.cluster.zkStr.cluster1", ZkStarter.DEFAULT_ZK_STR + "/cluster1");
+          conf.addProperty("kafka.cluster.zkStr.cluster1", ZkStarter.DEFAULT_ZK_STR);
           conf.addProperty("kafka.cluster.zkStr.cluster3", ZkStarter.DEFAULT_ZK_STR + "/cluster3");
           final ControllerStarter controllerStarter = new ControllerStarter(conf);
           try {

@@ -72,8 +72,8 @@ public class RestTestBase {
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = parser.parse(ManagerConf.constructManagerOptions(), args);
     ManagerConf conf = ManagerConf.getManagerConf(cmd);
-    conf.addProperty("kafka.cluster.zkStr.cluster1", ZkStarter.DEFAULT_ZK_STR + "/cluster1");
-    conf.addProperty("kafka.cluster.zkStr.cluster3", ZkStarter.DEFAULT_ZK_STR + "/cluster3");
+    conf.addProperty("kafka.cluster.zkStr.cluster1", ZkStarter.DEFAULT_ZK_STR);
+    conf.addProperty("kafka.cluster.zkStr.cluster3", ZkStarter.DEFAULT_ZK_STR);
 
     ManagerStarter managerStarter = new ManagerStarter(conf);
     try {
@@ -90,11 +90,11 @@ public class RestTestBase {
     ZkStarter.startLocalZkServer();
     kafkaStarter = KafkaStarterUtils.startServer(KafkaStarterUtils.DEFAULT_KAFKA_PORT,
         KafkaStarterUtils.DEFAULT_BROKER_ID,
-        ZkStarter.DEFAULT_ZK_STR + "/cluster1", KafkaStarterUtils.getDefaultKafkaConfiguration());
+        ZkStarter.DEFAULT_ZK_STR + KafkaStarterUtils.getDefaultKafkaConfiguration());
 
     dstkafkaStarter = KafkaStarterUtils.startServer(KafkaStarterUtils.DEFAULT_KAFKA_PORT+1,
         KafkaStarterUtils.DEFAULT_BROKER_ID+1,
-        ZkStarter.DEFAULT_ZK_STR + "/cluster3", KafkaStarterUtils.getDefaultKafkaConfiguration());
+        ZkStarter.DEFAULT_ZK_STR + KafkaStarterUtils.getDefaultKafkaConfiguration());
 
     try {
       Thread.sleep(2000);
