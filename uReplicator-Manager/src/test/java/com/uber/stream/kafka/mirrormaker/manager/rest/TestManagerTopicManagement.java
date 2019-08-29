@@ -110,8 +110,8 @@ public class TestManagerTopicManagement extends RestTestBase {
           conf.setDestinationClusters("cluster3");
           conf.setEnvironment("sjc1.sjc1a");
           conf.setHelixClusterName("testMirrorMaker");
-          conf.addProperty("kafka.cluster.zkStr.cluster1", ZkStarter.DEFAULT_ZK_STR);
-          conf.addProperty("kafka.cluster.zkStr.cluster3", ZkStarter.DEFAULT_ZK_STR);
+          conf.addProperty("kafka.cluster.zkStr.cluster1", ZkStarter.DEFAULT_ZK_STR + "/cluster1");
+          conf.addProperty("kafka.cluster.zkStr.cluster3", ZkStarter.DEFAULT_ZK_STR + "/cluster3");
           final ControllerStarter controllerStarter = new ControllerStarter(conf);
           try {
             CONTROLLER_STARTER.add(id, controllerStarter);
@@ -320,7 +320,7 @@ public class TestManagerTopicManagement extends RestTestBase {
 
   @Test
   public void test1Get() {
-    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR );
+    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR + "/cluster1");
     // Get whole picture of the deployment
     Request request = ManagerRequestURLBuilder.baseUrl(REQUEST_URL).getTopicExternalViewRequestUrl("");
     Response response = HTTP_CLIENT.handle(request);
@@ -425,7 +425,7 @@ public class TestManagerTopicManagement extends RestTestBase {
     startController(DEPLOYMENT_NAME, CONTROLLER_PORT, 1);
     startWorker(DEPLOYMENT_NAME, 2);
 
-    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR);
+    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR + "/cluster1");
     KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR + "/cluster3");
 
     // Create topic
@@ -486,7 +486,7 @@ public class TestManagerTopicManagement extends RestTestBase {
     startController(DEPLOYMENT_NAME, CONTROLLER_PORT, 1);
     startWorker(DEPLOYMENT_NAME, 2);
 
-    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR );
+    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR + "/cluster1");
     KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR + "/cluster3");
 
     // Create topic
@@ -555,7 +555,7 @@ public class TestManagerTopicManagement extends RestTestBase {
     startController(DEPLOYMENT_NAME, CONTROLLER_PORT, 1);
     startWorker(DEPLOYMENT_NAME, 2);
 
-    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR );
+    KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR + "/cluster1");
     KafkaStarterUtils.createTopic("testManagerTopicManagement0", ZkStarter.DEFAULT_ZK_STR + "/cluster3");
 
     // Create topic
@@ -611,4 +611,3 @@ public class TestManagerTopicManagement extends RestTestBase {
   }
 
 }
-
