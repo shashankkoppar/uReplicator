@@ -53,8 +53,8 @@ RUN mkdir /usr/kafka
 ADD server1.properties /usr/kafka/server1.properties
 ADD server2.properties /usr/kafka/server2.properties
 
-RUN echo "advertised.host.name=devenv" >> /usr/kafka/server1.properties
-RUN echo "advertised.host.name=devenv" >> /usr/kafka/server2.properties
+RUN echo "advertised.host.name=10.132.0.210" >> /usr/kafka/server1.properties
+RUN echo "advertised.host.name=10.132.0.210" >> /usr/kafka/server2.properties
 
 ADD produce-data-to-kafka-topic-dummyTopic.sh /usr/kafka/produce-data-to-kafka-topic-dummyTopic.sh
 ADD dummyTopicData.log /usr/kafka/dummyTopicData.log
