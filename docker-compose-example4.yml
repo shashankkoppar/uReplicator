@@ -1,37 +1,16 @@
-#
-# Copyright (C) 2015-2019 Uber Technologies, Inc. (streaming-data@uber.com)
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#         http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 version: '3'
-#
-# Copyright (C) 2015-2017 Uber Technologies, Inc. (streaming-data@uber.com)
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#         http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 services:
+  graphite:
+    image: graphiteapp/graphite-statsd
+    restart: always
+    ports:
+     - "80:80"
+     - "2003-2004:2003-2004"
+     - "2023-2024:2023-2024"
+     - "8125:8125/udp"
+     - "8126:8126"
+    volumes:
+        - /opt/graphite:/opt/graphite/storage/whisper/
   devenv:
     build: devenv/.
     ports:
@@ -48,14 +27,18 @@ services:
       -enableAutoTopicExpansion true \
       -port 9000 \
       -refreshTimeInSeconds 10 \
-      -srcKafkaZkPath devenv:2181/cluster1 \
-      -zookeeper devenv:2181 \
-      -destKafkaZkPath devenv:2181/cluster1 \
-      -helixClusterName testMirrorMaker"
+      -srcKafkaZkPath 10.132.0.210:2181 10.132.0.210:2181 \
+      -zookeeper 10.132.0.210:2181 \
+      -destKafkaZkPath 10.132.0.210:2181 \
+      -helixClusterName testMirrorMaker \
+      -graphiteHost graphite \
+      -graphitePort 2003"
     depends_on:
     - devenv
+    restart: always
     links:
     - devenv
+    - graphite
     healthcheck:
       test: ["CMD", "./wait-for-it.sh", "controller:9000", "60"]
       interval: 30s
@@ -70,6 +53,7 @@ services:
         --topic.mappings example/example-topicmapping.properties"
     depends_on:
     - controller
+    restart: always
     links:
     - controller
   worker_2:
@@ -81,5 +65,6 @@ services:
         --topic.mappings example/example-topicmapping.properties"
     depends_on:
     - controller
+    restart: always
     links:
     - controller
