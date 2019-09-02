@@ -66,7 +66,7 @@ ADD supervisor/kafka.conf supervisor/zookeeper.conf /etc/supervisor/conf.d/
 EXPOSE 2181 9093 9094
 
 # hack for advertised.host.name
-RUN echo "127.0.0.1 devenv" >> /etc/hosts
+RUN echo "10.132.0.210 devenv" >> /etc/hosts
 ENV PATH="/usr/share/zookeeper/bin:${PATH}"
 
 
