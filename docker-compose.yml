@@ -46,7 +46,7 @@ services:
     volumes:
         - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller
   worker_1:
-    image: ureplicator_controller
+    image: app_controller
     command:  "worker \
         --consumer.config example/example-consumer.properties \
         --producer.config example/example-producer.properties \
@@ -58,7 +58,7 @@ services:
     volumes:
         - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
   worker_2:
-    image: ureplicator_controller
+    image: app_controller
     command: "worker \
         --consumer.config example/example-consumer.properties \
         --producer.config example/example-producer.properties \
