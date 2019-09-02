@@ -65,7 +65,7 @@ services:
         --helix.config example/example-helix-2.properties "
     volumes:
         - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
-        - /tmp/uReplicator/uReplicator-Distribution/script:/usr/src/app/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin
+        - /home/shashank/app/uReplicator-Distribution/script:/usr/src/app/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin
     depends_on:
     - controller
     links:
