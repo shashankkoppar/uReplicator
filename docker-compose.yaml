@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+  graphite:
+    image: graphiteapp/graphite-statsd
+    restart: always
+    ports:
+     - "80:80"
+     - "2003-2004:2003-2004"
+     - "2023-2024:2023-2024"
+     - "8125:8125/udp"
+     - "8126:8126"
+    volumes:
+        - /opt/graphite:/opt/graphite/storage/whisper/
   devenv:
     build: devenv/.
     ports:
@@ -23,11 +34,13 @@ services:
        -deployment ureplicator-example \
        -env deployment \
        -enableRebalance true \
-       -zookeeper 10.132.0.210:2181/ureplicator-example \
+       -zookeeper 10.132.0.210:2181 \
        -managerPort 8100 \
        -controllerPort 9000 \
        -initMaxNumWorkersPerRoute 5 \
-       -maxNumWorkersPerRoute 10"
+       -maxNumWorkersPerRoute 10 \
+       -graphiteHost graphite \
+       -graphitePort 2003"
     depends_on:
     - devenv
     deploy:
@@ -52,13 +65,14 @@ services:
           -destClusters cluster1 cluster2 \
           -helixClusterName ureplicator \
           -mode customized \
-          -zookeeper 10.132.0.210:2181/ureplicator-example \
+          -zookeeper 10.132.0.210:2181 \
           -port 9000 \
           -instanceId 1 \
           -hostname controller \
           -offsetRefreshIntervalInSec 0 \
-          -enableAutoWhitelist false
-          "
+          -enableAutoWhitelist false \
+          -graphiteHost graphite \
+          -graphitePort 2003"
     depends_on:
     - devenv
     links:
@@ -68,6 +82,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    volumes:
+        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller
   worker_1:
     image: ureplicator_manager
     command:  "worker \
