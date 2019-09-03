@@ -27,8 +27,8 @@ services:
     - "8100:8100"
     command: "manager \
        -config example/example-cluster.properties \
-       -srcClusters cluster1 cluster2 \
-       -destClusters cluster1 cluster2 \
+       -srcClusters cluster1,cluster2 \
+       -destClusters cluster1,cluster2 \
        -deployment ureplicator-example \
        -env deployment \
        -enableRebalance true \
