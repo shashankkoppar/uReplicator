@@ -76,6 +76,8 @@ services:
     - devenv
     links:
     - devenv
+    volumes:
+        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/    
     healthcheck:
       test: ["CMD", "./wait-for-it.sh", "controller:9000", "60"]
       interval: 30s
