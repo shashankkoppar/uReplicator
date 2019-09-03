@@ -61,8 +61,8 @@ services:
           -config example/example-cluster.properties \
           -enableFederated true \
           -deploymentName ureplicator-example \
-          -srcClusters cluster1 cluster2 \
-          -destClusters cluster1 cluster2 \
+          -srcClusters cluster1,cluster2 \
+          -destClusters cluster1,cluster2 \
           -helixClusterName ureplicator \
           -mode customized \
           -zookeeper 10.132.0.210:2181 \
