@@ -28,6 +28,7 @@ wait_for() {
         echo "Host started"
       fi
       exec /usr/share/zookeeper/bin/zkCli.sh create /ureplicator-example ureplicator-example
+      exec /usr/share/zookeeper/bin/zkCli.sh create /manager-controller-ureplicator-example ureplicator-example      
       exit 0
     fi
     sleep 1
@@ -39,4 +40,3 @@ HOST="$1"
 TIMEOUT="$2"
 
 wait_for
-
