@@ -10,8 +10,6 @@ services:
      - "2023-2024:2023-2024"
      - "8125:8125/udp"
      - "8126:8126"
-    volumes:
-        - /opt/graphite:/opt/graphite/storage/whisper/
   devenv:
     build: devenv/.
     ports:
@@ -82,8 +80,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-    volumes:
-        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller
   worker_1:
     image: ureplicator_manager
     command:  "worker \
