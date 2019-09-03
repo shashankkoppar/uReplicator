@@ -67,6 +67,7 @@ services:
           -port 9000 \
           -instanceId 1 \
           -hostname controller \
+          -maxWorkingInstances 0 \
           -offsetRefreshIntervalInSec 0 \
           -enableAutoWhitelist false \
           -graphiteHost graphite \
