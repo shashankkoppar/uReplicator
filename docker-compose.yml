@@ -50,6 +50,7 @@ services:
     command:  "worker \
         --consumer.config example/example-consumer.properties \
         --producer.config example/example-producer.properties \
+        --topic.mappings example/example-topicmapping.properties\ 
         --helix.config example/example-helix.properties "
     depends_on:
     - controller
@@ -62,6 +63,7 @@ services:
     command: "worker \
         --consumer.config example/example-consumer.properties \
         --producer.config example/example-producer.properties \
+        --topic.mappings example/example-topicmapping.properties\
         --helix.config example/example-helix-2.properties "
     volumes:
         - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
