@@ -27,8 +27,8 @@ wait_for() {
       if [ $# -gt 0 ] ; then
         echo "Host started"
       fi
-      exec /usr/share/zookeeper/bin/zkCli.sh create /ureplicator-example ureplicator-example
-      exec /usr/share/zookeeper/bin/zkCli.sh create /manager-controller-ureplicator-example ureplicator-example      
+      exec /usr/share/zookeeper/bin/zkCli.sh create /manager-controller-ureplicator-route1 ureplicator-route1
+      exec /usr/share/zookeeper/bin/zkCli.sh create /manager-controller-ureplicator-route2 ureplicator-route2      
       exit 0
     fi
     sleep 1

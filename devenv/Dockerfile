@@ -22,8 +22,8 @@ RUN mkdir /usr/kafka
 ADD server1.properties /usr/kafka/server1.properties
 ADD server2.properties /usr/kafka/server2.properties
 
-RUN echo "advertised.host.name=10.132.0.210" >> /usr/kafka/server1.properties
-RUN echo "advertised.host.name=10.132.0.210" >> /usr/kafka/server2.properties
+RUN echo "advertised.host.name=127.0.0.1" >> /usr/kafka/server1.properties
+RUN echo "advertised.host.name=127.0.0.1" >> /usr/kafka/server2.properties
 
 ADD produce-data-to-kafka-topic-dummyTopic.sh /usr/kafka/produce-data-to-kafka-topic-dummyTopic.sh
 ADD dummyTopicData.log /usr/kafka/dummyTopicData.log
@@ -35,7 +35,7 @@ ADD supervisor/kafka.conf supervisor/zookeeper.conf /etc/supervisor/conf.d/
 EXPOSE 2181 9093 9094
 
 # hack for advertised.host.name
-RUN echo "10.132.0.210 devenv" >> /etc/hosts
+RUN echo "127.0.0.1 devenv" >> /etc/hosts
 ENV PATH="/usr/share/zookeeper/bin:${PATH}"
 
 

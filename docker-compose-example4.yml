@@ -10,6 +10,8 @@ services:
      - "2023-2024:2023-2024"
      - "8125:8125/udp"
      - "8126:8126"
+    volumes:
+        - /home/shashank/graphite:/opt/graphite/storage/whisper/
   devenv:
     build: devenv/.
     ports:
@@ -26,13 +28,13 @@ services:
     ports:
     - "8100:8100"
     command: "manager \
-       -config example/example-cluster.properties \
+       -config example/cluster.properties \
        -srcClusters cluster1,cluster2 \
        -destClusters cluster1,cluster2 \
        -deployment ureplicator-route2 \
        -env deployment \
        -enableRebalance true \
-       -zookeeper 10.132.0.198:2181 \
+       -zookeeper devenv:2181/cluster2 \
        -managerPort 8100 \
        -controllerPort 9000 \
        -initMaxNumWorkersPerRoute 5 \
@@ -56,14 +58,14 @@ services:
     ports:
     - "9000:9000"
     command: "controller \
-          -config example/example-cluster.properties \
+          -config example/cluster.properties \
           -enableFederated true \
           -deploymentName ureplicator-route2 \
           -srcClusters cluster1,cluster2 \
           -destClusters cluster1,cluster2 \
           -helixClusterName manager-controller-ureplicator-route2 \
           -mode customized \
-          -zookeeper 10.132.0.198:2181 \
+          -zookeeper devenv:2181/cluster2 \
           -port 9000 \
           -instanceId 1 \
           -hostname controller \
@@ -86,11 +88,11 @@ services:
   worker_1:
     image: ureplicator_manager
     command:  "worker \
-        --consumer.config example/example-consumer.properties \
-        --producer.config example/example-producer.properties \
-        --helix.config example/example-helix-2.properties \
-        --topic.mappings example/example-topicmapping.properties \
-        --cluster.config example/example-cluster.properties"
+        --consumer.config replicator-config/consumer.properties \
+        --producer.config replicator-config/producer.properties \
+        --helix.config replicator-config/helix-2.properties \
+        --topic.mappings replicator-config/topicmapping.properties \
+        --cluster.config replicator-config/cluster.properties"
     depends_on:
     - controller
     links:
