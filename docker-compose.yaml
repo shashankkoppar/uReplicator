@@ -88,7 +88,7 @@ services:
     command:  "worker \
         --consumer.config example/example-consumer.properties \
         --producer.config example/example-producer.properties \
-        --helix.config example/example-helix-3.properties \
+        --helix.config example/example-helix-1.properties \
         --topic.mappings example/example-topicmapping.properties \
         --cluster.config example/example-cluster.properties"
     depends_on:
