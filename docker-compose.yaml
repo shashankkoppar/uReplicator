@@ -28,7 +28,7 @@ services:
     ports:
     - "8100:8100"
     command: "manager \
-       -config example/cluster.properties \
+       -config replicator-config/cluster.properties \
        -srcClusters cluster1,cluster2 \
        -destClusters cluster1,cluster2 \
        -deployment ureplicator-route1 \
@@ -58,7 +58,7 @@ services:
     ports:
     - "9000:9000"
     command: "controller \
-          -config example/cluster.properties \
+          -config replicator-config/cluster.properties \
           -enableFederated true \
           -deploymentName ureplicator-route1 \
           -srcClusters cluster1,cluster2 \
