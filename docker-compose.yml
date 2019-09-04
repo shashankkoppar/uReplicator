@@ -11,7 +11,7 @@ services:
      - "8125:8125/udp"
      - "8126:8126"
     volumes:
-        - /home/shashank/graphite:/opt/graphite/storage/whisper/
+        - /home/shashank/graphite:/home/shashank/graphite/storage/whisper/
   devenv:
     build: devenv/.
     ports:
@@ -44,8 +44,8 @@ services:
       timeout: 10s
       retries: 5
     volumes:
-        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller
-  worker_1:
+        - /home/shashank/testMirrorMaker:/var/log/kafka-mirror-maker-controller
+  worker:
     image: app_controller
     command:  "worker \
         --consumer.config example/example-consumer.properties \
@@ -57,17 +57,4 @@ services:
     links:
     - controller
     volumes:
-        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
-  worker_2:
-    image: app_controller
-    command: "worker \
-        --consumer.config example/example-consumer.properties \
-        --producer.config example/example-producer.properties \
-        --topic.mappings example/example-topicmapping.properties\
-        --helix.config example/example-helix.properties "
-    volumes:
         - /home/shashank/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
-    depends_on:
-    - controller
-    links:
-    - controller
