@@ -11,7 +11,7 @@ services:
      - "8125:8125/udp"
      - "8126:8126"
     volumes:
-        - /opt/graphite:/opt/graphite/storage/whisper/
+        - /home/shashank/graphite:/opt/graphite/storage/whisper/
   devenv:
     build: devenv/.
     ports:
@@ -66,8 +66,7 @@ services:
         --topic.mappings example/example-topicmapping.properties\
         --helix.config example/example-helix.properties "
     volumes:
-        - /opt/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
-        - /home/shashank/app/uReplicator-Distribution/script:/usr/src/app/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin
+        - /home/shashank/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
     depends_on:
     - controller
     links:
