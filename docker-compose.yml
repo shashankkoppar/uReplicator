@@ -29,7 +29,7 @@ services:
       -port 9000 \
       -refreshTimeInSeconds 10 \
       -srcKafkaZkPath 10.132.0.210:2181 \
-      -zookeeper 10.132.0.210:2181 \
+      -zookeeper devenv:2181/cluster1 \
       -destKafkaZkPath 10.132.0.210:2181 \
       -helixClusterName replicator1 \
       -graphiteHost graphite \
