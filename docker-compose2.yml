@@ -31,7 +31,7 @@ services:
       -srcKafkaZkPath 10.132.0.198:2181 \
       -zookeeper 10.132.0.198:2181 \
       -destKafkaZkPath 10.132.0.198:2181 \
-      -helixClusterName replicator2 \
+      -helixClusterName replicatorpoc2 \
       -graphiteHost graphite \
       -graphitePort 2003"
     depends_on:
