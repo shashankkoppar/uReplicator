@@ -31,7 +31,7 @@ services:
       -srcKafkaZkPath 10.132.0.198:2181 \
       -zookeeper 10.132.0.198:2181 \
       -destKafkaZkPath 10.132.0.198:2181 \
-      -helixClusterName replicatorpoc2 \
+      -helixClusterName kafkareplicator21 \
       -graphiteHost graphite \
       -graphitePort 2003"
     depends_on:
@@ -58,3 +58,30 @@ services:
     - controller
     volumes:
         - /home/shashank/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
+  worker1:
+    image: app_controller
+    command:  "worker \
+        --consumer.config example/example-consumer.properties \
+        --producer.config example/example-producer.properties \
+        --topic.mappings example/example-topicmapping.properties \
+        --helix.config example/example-helix-2-1.properties "
+    depends_on:
+    - controller
+    links:
+    - controller
+    volumes:
+        - /home/shashank/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
+  worker2:
+    image: app_controller
+    command:  "worker \
+        --consumer.config example/example-consumer.properties \
+        --producer.config example/example-producer.properties \
+        --topic.mappings example/example-topicmapping.properties \
+        --helix.config example/example-helix-2-2.properties "
+    depends_on:
+    - controller
+    links:
+    - controller
+    volumes:
+        - /home/shashank/testMirrorMaker:/var/log/kafka-mirror-maker-controller/
+        
