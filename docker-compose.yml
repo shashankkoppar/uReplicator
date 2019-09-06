@@ -34,9 +34,9 @@ services:
       -graphiteHost graphite \
       -graphitePort 2003"
     depends_on:
-    - devenv
+    - zookeeper
     links:
-    - devenv
+    - zookeeper
     healthcheck:
       test: ["CMD", "./wait-for-it.sh", "controller:9000", "60"]
       interval: 30s
